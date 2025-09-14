@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Simulator</title>
+</head>
+
+<style>
+
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h1{
+        text-align: center;
+        margin-top: 20px;
+        color:lightseagreen;
+        font: bolder;
+        font-size: 60px;
+    }
+
+    .dice{
+        font-size: 100px;
+        text-align: center;
+        margin: 20px;
+    }
+
+    .roll-button{
+        display: block;
+        margin: 0 auto;
+        padding: 10px 20px;
+        font-size: 20px;
+        background-color: rgb(30, 169, 162);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    li{
+        list-style: none;
+        margin-top: 20px;
+        font-size: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        background-color: rgb(229, 229, 230);
+        width: 400px;
+        height: 60px;
+        margin-left: 35%;
+        padding: 15px;
+        
+    }
+
+    li span{
+        font-size: 40px;
+        float: right;
+        margin-right: 20px;
+        color: rgb(19, 90, 255);
+        margin-top: -20px;
+    }
+
+    @keyframes rotateDice {
+    0%   { transform: rotate(0deg); }
+    25%  { transform: rotate(90deg); }
+    50%  { transform: rotate(180deg); }
+    75%  { transform: rotate(270deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.rotate {
+    animation: rotateDice 0.4s ease-in-out;
+}
+
+</style>
+
+
+<body>
+    <div class="main">
+        <h1>Dice Roll Simulator</h1>
+        <div class="dice" id="dice">&#9856;</div>
+        <button onclick="change()" id="roll-button" class="roll-button" >Roll Dice</button>
+        <ul id="roll-history">
+          <!-- <li>Roll 1: <span>&#9856;</span></li>
+          <li>Roll 2: <span>&#9860;</span></li> -->
+        </ul>
+    </div>    
+</body>
+
+<script>
+
+    const dice= document.getElementById('dice');
+    const rollButton= document.getElementById('roll-button');
+    const rollHistory= document.getElementById('roll-history');
+
+    function change(){
+
+          // Remove previous animation class (if any)
+        dice.classList.remove('rotate');
+
+        // Force reflow so animation can restart
+        void dice.offsetWidth;
+
+        // Add animation class
+        dice.classList.add('rotate');
+        
+        const roll= Math.floor(Math.random()*6)+1;
+        const diceFaces= ['&#9856;','&#9857;','&#9858;','&#9859;','&#9860;','&#9861;'];
+        dice.innerHTML= diceFaces[roll-1];
+
+        const listItem= document.createElement('li');
+        listItem.innerHTML= `Roll ${rollHistory.children.length + 1} <span>${diceFaces[roll-1]}</span>`;
+        rollHistory.appendChild(listItem);
+       
+    }
+
+
+</script>
+
+</html>
